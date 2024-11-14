@@ -1,0 +1,118 @@
+int key = inputKey();
+    if ((key == 'w') && (huong != XUONG)) {
+        huong = LEN;
+    } else if ((key == 's') && (huong != LEN)) {
+        huong = XUONG;
+    } else if ((key == 'a') && (huong != PHAI)) {
+        huong = TRAI;
+    } else if ((key == 'd') && (huong != TRAI)) {
+        huong = PHAI;
+    }
+}
+
+// Hàm ve khung trò choi
+void vekhung() {
+    setTextColor(BLUE_COLOR);
+    for (int i = TUONG_TRAI; i <= TUONG_PHAI; i++) {
+        gotoXY(i, TUONG_TREN);
+        cout << (char)220;
+        gotoXY(i, TUONG_DUOI);
+        cout << (char)223;
+    }
+    for (int j = TUONG_TREN + 1; j <= TUONG_DUOI - 1; j++) {
+        gotoXY(TUONG_TRAI, j);
+        cout << (char)221;
+        gotoXY(TUONG_PHAI, j);
+        cout << (char)222;
+    }
+}
+
+// Hàm kiem tra neu ran dâm vào tuong
+bool damcot(Toado ran[]) {
+    if ((ran[0].y == TUONG_TREN) || (ran[0].y == TUONG_DUOI) || (ran[0].x == TUONG_TRAI) || (ran[0].x == TUONG_PHAI)) {
+        return TRUE;
+    }
+    return FALSE;
+}
+
+// Hàm xu lý khi trò choi ket thúc
+void xulythua() {
+    if (hiendiem(diem) < diem) {
+        luudiem(diem);
+    }
+    Sleep(200);
+    clrscr();
+    setTextColor(RED_COLOR);
+    gotoXY(10, 6);
+    cout << "Game over" << endl;
+    gotoXY(10, 7);
+    cout << "Diem cua ban la: " << diem << endl;
+    gotoXY(10, 8);
+    cout << "Nhan 'e' de thoat.";
+    while (inputKey() != 'e') {}
+}
+
+// Hàm tao moi moi cho ran
+Toado taomoi(Toado ran[]) {
+    setTextColor(RED_COLOR);
+    srand(time(NULL));
+    int x, y;
+    while (1) {
+        x = rand() % (TUONG_PHAI - 1 - TUONG_TRAI - 1) + (TUONG_TRAI + 1);
+        y = rand() % (TUONG_DUOI - 1 - TUONG_TREN - 1) + (TUONG_TREN + 1);
+        bool check = false;
+        for (int i = 0; i < sodot; i++) {
+            if ((x == ran[i].x) && (y == ran[i].y)) {
+                check = true;
+                break;
+            }
+        }
+        if (check == false) break;
+    }
+    gotoXY(x, y);
+    cout << "@";
+    return {x, y};
+}
+
+// Hàm kiem tra neu ran an moi
+bool ktraanmoi(Toado moi) {
+    if ((ran[0].x == moi.x) && (ran[0].y == moi.y) || vatcan1.x == moi.x || vatcan2.x == moi.x) {
+        return TRUE;
+    } else return FALSE;
+}
+
+// Hàm kiem tra neu ran dâm vào thân mình
+bool damdot(Toado ran[]) {
+    for (int i = 1; i < sodot; i++) {
+        if ((ran[0].x == ran[i].x) && (ran[0].y == ran[i].y)) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// Hàm doi huong di chuyen cua vat can
+void doivatcan(Toado &vatcan) {
+    if (vatcan.y == TUONG_TREN + 1) {
+        vatcan.huong = XUONG;
+    } else if (vatcan.y == TUONG_DUOI - 1) {
+        vatcan.huong = LEN;
+    }
+}
+
+// Hàm xóa vat can khoi màn hình
+void xoavatcan(Toado &vatcan) {
+    gotoXY(vatcan.x, vatcan.y);
+    cout << " ";
+}
+
+// Hàm ve vat can lên màn hình
+void taovatcan(Toado &vatcan) {
+    setTextColor(RED_COLOR);
+    gotoXY(vatcan.x, vatcan.y);
+    cout << "$";
+}
+
+// Hàm di chuyen vat can theo huong hien tai
+void dcvatcan(Toado &vatcan) {
+    if (vatcan.huong == XUONG) {
