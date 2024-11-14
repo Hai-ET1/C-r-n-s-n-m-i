@@ -1,0 +1,26 @@
+cout << "An moi se duoc cong diem" << endl;
+                gotoXY(10, 8);
+                cout << "Neu dam trung cot, than ran hoac vat can se ket thuc game" << endl;
+                gotoXY(10, 9);
+                cout << "Nhan e de thoat.";
+                while (inputKey() != 'e') {}
+                clrscr();
+            } else if (choice == 3) {
+                clrscr();
+                gotoXY(10, 7);
+                cout << "Diem cao nhat cua ban la: " << hiendiem(diem);
+                gotoXY(10, 8);
+                cout << "Nhan e de thoat.";
+                while (inputKey() != 'e') {}
+                clrscr();
+            }
+        }
+        Sleep(100);
+    }
+}
+
+// Hàm chính cua chuong trình
+int main() {
+    menu();
+    return 0;
+}
