@@ -1,0 +1,111 @@
+vatcan.y++;
+    } else if (vatcan.huong == LEN) {
+        vatcan.y--;
+    }
+}
+
+// Hàm kiem tra neu ran dâm vào vat can
+bool damvatcan(Toado ran[], Toado vatcan) {
+    for (int i = 0; i < sodot; i++) {
+        if ((ran[i].x == vatcan.x) && (ran[i].y == vatcan.y)) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// Hàm chon do khó cua trò choi
+void chondokho() {
+    int choice = 0;
+    clrscr();
+    while (1) {
+        setTextColor(GREEN_COLOR);
+        khoitao();
+        gotoXY(10, 5);
+        cout << "-----Chedochoi------";
+        gotoXY(10, 6);
+        cout << (choice == 0 ? "> " : "  ") << "1. De"; 
+        gotoXY(10, 7);
+        cout << (choice == 1 ? "> " : "  ") << "2. Binh Thuong";
+        gotoXY(10, 8);
+        cout << (choice == 2 ? "> " : "  ") << "3. Kho";
+        noCursorType();
+        int key = inputKey();
+        if ((key == 's') && (choice != 2)) {
+            choice += 1;
+        } else if ((key == 'w') && (choice != 0)) {
+            choice -= 1;
+        } else if (key == '\r') {
+            if (choice == 0) {
+                clrscr();
+                tocdo = 200;
+                logic(DE);
+                break;
+            } else if (choice == 1) {
+                clrscr();
+                tocdo = 100;
+                logic(TRUNG_BINH);
+                break;
+            } else if (choice == 2) {
+                clrscr();
+                tocdo = 95;
+                logic(KHO);
+                break;
+            }
+        }
+    }
+}
+
+// Hàm luu diem vào file
+void luudiem(int diem) {
+    ofstream os("diem.txt");
+    os << diem;
+    os.close();
+}
+
+// Hàm hien thi diem cao nhat tu file
+int hiendiem(int diem) {
+    ifstream is;
+    is.open("diem.txt");
+    is >> diem;
+    is.close();
+    return diem;
+}
+
+// Hàm menu chính cua trò choi
+void menu() {
+    int choice = 0;
+    clrscr();
+    while (1) {
+        setTextColor(GREEN_COLOR);
+        khoitao();
+        gotoXY(10, 5);
+        cout << "------Menu------";
+        gotoXY(10, 6);
+        cout << (choice == 0 ? "> " : "  ") << "1. Choi"; 
+        gotoXY(10, 7);
+        cout << (choice == 1 ? "> " : "  ") << "2. Thoat";
+        gotoXY(10, 8);
+        cout << (choice == 2 ? "> " : "  ") << "3. Huong Dan";
+        gotoXY(10, 9);
+        cout << (choice == 3 ? "> " : "  ") << "4. Xem Diem";
+        noCursorType();
+        int key = inputKey();
+        if ((key == 's') && (choice != 3)) {
+            choice += 1;
+        } else if ((key == 'w') && (choice != 0)) {
+            choice -= 1;
+        } else if (key == '\r') {
+            if (choice == 0) {
+                chondokho();
+                xulythua();
+                clrscr();
+            } else if (choice == 1) {
+                clrscr();
+                break;
+            } else if (choice == 2) {
+                Sleep(200);
+                clrscr();
+                gotoXY(10, 6);
+                cout << "Nhan a,s,w,d de di chuyen ran" << endl;
+                gotoXY(10, 7);
